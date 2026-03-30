@@ -23,7 +23,7 @@ const Carousel = ({ carousel }) => {
               />
             </div>
 
-            <div className="py-8 md:px-8 flex-1 max-w-md">
+            <div className="py-8 px-4 md:px-8 space-y-4 flex-1 max-w-md">
               <div className="flex gap-2 items-center">
                 <div className="text-accent">
                   <FaArrowTrendUp />

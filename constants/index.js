@@ -59,3 +59,46 @@ export const carousel = [
       "A timeless favorite with fresh basil, mozzarella, and rich tomato sauce on a perfectly baked crust.",
   },
 ];
+
+export const recipes = [
+  {
+    name: "Berry Delight Parfait",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Classic Margherita Pizza",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Creamy Alfredo Pasta",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Golden Butter Croissants",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Spicy Chicken Tacos",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Fluffy Banana Pancakes",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Garlic Herb Roasted Chicken",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Chocolate Lava Cake",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Fresh Avocado Toast",
+    image: "/cheesecake.jpg",
+  },
+  {
+    name: "Lemon Butter Salmon",
+    image: "/cheesecake.jpg",
+  },
+];
