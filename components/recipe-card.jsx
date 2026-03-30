@@ -3,7 +3,7 @@ import React from "react";
 
 const RecipeCard = ({ recipe }) => {
   return (
-    <div className="card bg-base-100 w-full max-w-sm mx-auto">
+    <div className="card bg-base-100 w-full">
       <figure className="w-full rounded-md">
         <Image
           src={recipe.image}
