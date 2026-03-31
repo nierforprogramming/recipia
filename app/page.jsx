@@ -1,7 +1,9 @@
-import Hero from "@/components/hero";
-import Latest from "@/components/latest";
 import Navbar from "@/components/navbar";
+import Hero from "@/components/hero";
 import NewsLetter from "@/components/newsletter";
+import Trending from "@/components/trending";
+import Latest from "@/components/latest";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -12,8 +14,12 @@ export default function Home() {
       </div>
       <NewsLetter />
       <div className="px-5 2xl:px-40">
+        <Trending />
+      </div>
+      <div className="px-5 2xl:px-40">
         <Latest />
       </div>
+      <Footer />
     </>
   );
 }
