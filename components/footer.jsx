@@ -44,13 +44,13 @@ const Footer = () => {
           <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
         </aside>
         <nav className="grid-flow-col text-base-content/50 gap-4 md:place-self-center md:justify-self-end">
-          <a className="text-xl">
+          <a className="text-xl hover:text-accent">
             <RiLinkedinFill />
           </a>
-          <a className="text-xl">
+          <a className="text-xl hover:text-accent">
             <RiGithubFill />
           </a>
-          <a className="text-xl">
+          <a className="text-xl hover:text-accent">
             <RiInstagramFill />
           </a>
         </nav>

@@ -4,6 +4,7 @@ import NewsLetter from "@/components/newsletter";
 import Trending from "@/components/trending";
 import Latest from "@/components/latest";
 import Footer from "@/components/footer";
+import Handpicked from "@/components/handpicked";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <Trending />
       </div>
       <div className="px-5 2xl:px-40">
+        <Handpicked />
         <Latest />
       </div>
       <Footer />
