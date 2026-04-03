@@ -18,6 +18,12 @@ const Footer = () => {
           <a className="link link-hover hover:text-accent">GitHub</a>
         </nav>
         <nav>
+          <h6 className="footer-title">Follow</h6>
+          <a className="link link-hover hover:text-accent">Twitter</a>
+          <a className="link link-hover hover:text-accent">Instagram</a>
+          <a className="link link-hover hover:text-accent">YouTube</a>
+        </nav>
+        <nav>
           <h6 className="footer-title">Legal</h6>
           <a className="link link-hover hover:text-accent">Terms of use</a>
           <a className="link link-hover hover:text-accent">Privacy policy</a>

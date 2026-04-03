@@ -45,7 +45,7 @@ const Navbar = () => {
             {links.map((link) => (
               <li key={link.name}>
                 <a
-                  className="font-semibold hover:text-primary text-lg hover:bg-transparent"
+                  className="font-semibold hover:text-accent text-lg hover:bg-transparent"
                   href={link.path}
                 >
                   {link.name}
@@ -57,7 +57,7 @@ const Navbar = () => {
 
         {/* THEME */}
         <div className="navbar-end">
-          <label className="swap swap-rotate hover:bg-base-300 rounded-full p-2">
+          <label className="swap swap-rotate hover:bg-base-300 hover:text-accent rounded-full p-2">
             <input
               type="checkbox"
               checked={theme === "night"}
@@ -86,7 +86,7 @@ const Navbar = () => {
               <a
                 href={link.path}
                 onClick={() => setMenuOpen(false)}
-                className="block py-1 font-semibold hover:text-primary"
+                className="block py-1 font-semibold hover:text-accent"
               >
                 {link.name}
               </a>
