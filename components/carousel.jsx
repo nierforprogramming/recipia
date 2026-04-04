@@ -1,60 +1,88 @@
-import Image from "next/image";
-import React from "react";
+"use client";
 
+import Image from "next/image";
 import { FaArrowTrendUp } from "react-icons/fa6";
+import { useRef } from "react";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+
+import "swiper/css";
+import Link from "next/link";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 
 const Carousel = ({ carousel }) => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
   return (
-    <>
-      <div className="carousel my-8 w-full bg-primary/5 rounded-2xl">
-        {carousel.map((c, index) => (
-          <div
-            key={index}
-            id={`slide${index + 1}`}
-            className="carousel-item relative w-full flex-col lg:flex-row"
-          >
-            <div className="flex-1">
-              <Image
-                alt={c.name}
-                src={c.image}
-                width={400}
-                height={400}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="w-full h-auto object-cover"
-              />
-            </div>
+    <div className="my-8 w-full bg-primary/5 rounded-2xl overflow-hidden relative">
+      <div className="absolute bottom-15 w-full">
+        <button
+          ref={prevRef}
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 btn btn-circle bg-base-100 hover:bg-accent hover:text-white"
+        >
+          <GoArrowLeft />
+        </button>
 
-            <div className="py-8 pb-30 lg:pb-8 px-4 md:px-8 space-y-4 flex-1 lg:max-w-md">
-              <div className="flex gap-2 items-center">
-                <div className="text-accent">
-                  <FaArrowTrendUp />
-                </div>
-                <div>{c.makeRate}</div>
-              </div>
-              <div className="text-3xl md:text-5xl font-bold font-display">
-                {c.name}
-              </div>
-              <div className="max-w-md">{c.detail}</div>
-            </div>
-
-            <div className="absolute left-5 right-5 bottom-10 hidden lg:flex justify-between">
-              <a
-                href={`#slide${index}`}
-                className="btn btn-circle hover:btn-accent  hover:text-base-100"
-              >
-                ❮
-              </a>
-              <a
-                href={`#slide${index + 2}`}
-                className="btn btn-circle hover:btn-accent hover:text-base-100"
-              >
-                ❯
-              </a>
-            </div>
-          </div>
-        ))}
+        <button
+          ref={nextRef}
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 btn btn-circle bg-base-100 hover:bg-accent hover:text-white"
+        >
+          <GoArrowRight />
+        </button>
       </div>
-    </>
+
+      <Swiper
+        modules={[Navigation]}
+        loop
+        onBeforeInit={(swiper) => {
+          // connect custom buttons
+          swiper.params.navigation.prevEl = prevRef.current;
+          swiper.params.navigation.nextEl = nextRef.current;
+        }}
+        className="w-full"
+      >
+        {carousel.map((c, index) => (
+          <SwiperSlide key={index}>
+            <Link
+              href={`/${c.id}`}
+              className="relative w-full flex flex-col lg:flex-row"
+            >
+              {/* IMAGE */}
+              <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-120 lg:flex-1">
+                {c.image && (
+                  <Image
+                    src={c.image}
+                    alt={c.name}
+                    fill
+                    priority={index === 0}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                )}
+              </div>
+
+              {/* CONTENT */}
+              <div className="p-4 sm:p-6 md:p-8 space-y-4 flex-1 lg:max-w-md flex flex-col justify-center">
+                <div className="flex gap-2 items-center text-accent">
+                  <FaArrowTrendUp />
+                  <span className="text-sm">Trending</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-display">
+                  {c.name}
+                </h2>
+
+                <p className="text-sm sm:text-base text-gray-600 line-clamp-4">
+                  {c.instructions}
+                </p>
+              </div>
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 

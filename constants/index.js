@@ -3,15 +3,17 @@
 export const links = [
   {
     name: "Home",
-    path: "#home",
+    path: "/",
   },
-  {
-    name: "Recent Recipes",
-    path: "#recent",
-  },
+
   {
     name: "Trending Recipes",
     path: "#trending",
+  },
+
+  {
+    name: "Latest Recipes",
+    path: "#latest",
   },
 ];
 

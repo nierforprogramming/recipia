@@ -1,6 +1,7 @@
 "use client";
 
 import { links } from "@/constants";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RiMenuFill, RiMoonFill, RiSunFill } from "react-icons/ri";
 
@@ -34,9 +35,12 @@ const Navbar = () => {
             <RiMenuFill />
           </button>
 
-          <a className="text-xl lg:text-4xl px-2 font-bold font-display">
+          <Link
+            href="/"
+            className="text-xl lg:text-4xl px-2 font-bold font-display"
+          >
             Recipia
-          </a>
+          </Link>
         </div>
 
         {/* DESKTOP */}
@@ -44,12 +48,12 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">
             {links.map((link) => (
               <li key={link.name}>
-                <a
+                <Link
                   className="font-semibold hover:text-accent text-lg hover:bg-transparent"
                   href={link.path}
                 >
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
