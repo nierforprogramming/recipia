@@ -25,6 +25,10 @@ const RecipeDetailPage = async ({ params }) => {
 
   const recipe = res.data;
   const instructions = splitInstructions(recipe.instructions);
+  const ingredients = recipe?.ingredients;
+
+  console.log(recipe.ingredients);
+
   return (
     <>
       <div className="px-5 md:px-12 2xl:px-40">
@@ -109,6 +113,19 @@ const RecipeDetailPage = async ({ params }) => {
               <h3 className="font-display font-semibold text-3xl">
                 Ingredients
               </h3>
+
+              <ul className="mt-8 space-y-5">
+                {ingredients.map((ingredient, index) => (
+                  <li key={index} className="flex gap-4">
+                    <input
+                      type="checkbox"
+                      className="checkbox text-accent border-2 border-base-content rounded-full"
+                    />
+                    <span>{ingredient.measure}</span>
+                    <span>{ingredient.name}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* Instructions */}
@@ -117,7 +134,7 @@ const RecipeDetailPage = async ({ params }) => {
                 Instructions
               </h3>
 
-              <ul className="mt-4 space-y-10">
+              <ul className="mt-8 space-y-8">
                 {instructions.map((step, index) => (
                   <li key={index} className="flex gap-4">
                     <span className="font-semibold bg-accent p-2 rounded-full flex items-center justify-center w-6 h-6 text-white">
