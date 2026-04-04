@@ -21,7 +21,10 @@ const Handpicked = async () => {
     <section className="">
       <div className="">
         <div>
-          <SectionHeading text="Hand-Picked Collections" />
+          <SectionHeading
+            text="Hand-Picked Collections"
+            className="text-2xl lg:text-5xl"
+          />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {recipes.map((recipe, index) => (

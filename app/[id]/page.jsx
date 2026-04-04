@@ -26,9 +26,6 @@ const RecipeDetailPage = async ({ params }) => {
   const recipe = res.data;
   const instructions = splitInstructions(recipe.instructions);
   const ingredients = recipe?.ingredients;
-
-  console.log(recipe.ingredients);
-
   return (
     <>
       <div className="px-5 md:px-12 2xl:px-40">
