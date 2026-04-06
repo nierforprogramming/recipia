@@ -1,9 +1,16 @@
 "use client";
 
-import { links } from "@/constants";
+import { links, recipes } from "@/constants";
+import { searchRecipe } from "@/lib/recipes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { RiMenuFill, RiMoonFill, RiSunFill } from "react-icons/ri";
+import {
+  RiCloseFill,
+  RiMenuFill,
+  RiMoonFill,
+  RiSearchLine,
+  RiSunFill,
+} from "react-icons/ri";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(() => {
@@ -13,92 +20,166 @@ const Navbar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Search
+  const [searchOpen, setsearchOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  async function _searchRecipe(query) {
+    if (!query) {
+      setResults([]);
+      return;
+    }
+
+    setLoading(true);
+
+    const res = await searchRecipe(query);
+    const data = res?.data || [];
+
+    setResults(data);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      _searchRecipe(search);
+    }, 400);
+
+    return () => clearTimeout(delay);
+  }, [search]);
+
+  console.log(results);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "night" ? "light" : "night"));
   };
 
   return (
-    <nav className="lg:my-5">
-      {/* NAVBAR */}
-      <div className="navbar p-0 bg-base-100">
-        <div className="navbar-start">
-          {/* MENU BUTTON */}
-          <button
-            onClick={() => setMenuOpen((prev) => !prev)}
-            className="btn btn-ghost lg:hidden text-xl"
-          >
-            <RiMenuFill />
-          </button>
+    <>
+      <nav className="lg:my-5 relative">
+        {/* NAVBAR */}
+        <div className="navbar p-0 bg-base-100">
+          <div className="navbar-start">
+            {/* MENU BUTTON */}
+            <button
+              onClick={() => setMenuOpen((prev) => !prev)}
+              className="btn btn-ghost lg:hidden text-xl"
+            >
+              <RiMenuFill />
+            </button>
 
-          <Link
-            href="/"
-            className="text-xl lg:text-4xl px-2 font-bold font-display"
-          >
-            Recipia
-          </Link>
+            <Link
+              href="/"
+              className="text-xl lg:text-4xl px-2 font-bold font-display"
+            >
+              Recipia
+            </Link>
+          </div>
+
+          {/* DESKTOP */}
+          <div className="navbar-center hidden lg:flex">
+            <ul className="menu menu-horizontal px-1">
+              {links.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    className="font-semibold hover:text-accent text-lg hover:bg-transparent"
+                    href={link.path}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* THEME */}
+          <div className="navbar-end">
+            <div
+              onClick={() => setsearchOpen(true)}
+              className="hover:bg-base-300 hover:text-accent rounded-full p-2 cursor-pointer text-xl"
+            >
+              <RiSearchLine />
+            </div>
+
+            <label className="swap swap-rotate hover:bg-base-300 hover:text-accent rounded-full p-2">
+              <input
+                type="checkbox"
+                checked={theme === "night"}
+                onChange={toggleTheme}
+              />
+              <div className="swap-off text-xl">
+                <RiSunFill />
+              </div>
+              <div className="swap-on text-xl">
+                <RiMoonFill />
+              </div>
+            </label>
+          </div>
         </div>
 
-        {/* DESKTOP */}
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+        {/*  SLIDE DOWN MENU */}
+        <div
+          className={`
+          lg:hidden overflow-hidden transition-all duration-300 bg-base-100
+          ${menuOpen ? "max-h-96" : "max-h-0"}
+          `}
+        >
+          <ul className="flex flex-col gap-2 px-4">
             {links.map((link) => (
               <li key={link.name}>
-                <Link
-                  className="font-semibold hover:text-accent text-lg hover:bg-transparent"
+                <a
                   href={link.path}
+                  onClick={() => setMenuOpen(false)}
+                  className="block py-1 font-semibold hover:text-accent"
                 >
                   {link.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* THEME */}
-        <div className="navbar-end">
-          <label className="swap swap-rotate hover:bg-base-300 hover:text-accent rounded-full p-2">
-            <input
-              type="checkbox"
-              checked={theme === "night"}
-              onChange={toggleTheme}
-            />
-            <div className="swap-off text-xl">
-              <RiSunFill />
-            </div>
-            <div className="swap-on text-xl">
-              <RiMoonFill />
-            </div>
-          </label>
-        </div>
-      </div>
+        <div
+          className={`${searchOpen ? "absolute" : "hidden"} bg-base-200 p-10 z-50 w-full mx-auto top-0`}
+        >
+          <span
+            onClick={() => setsearchOpen(false)}
+            className="right-10 top-5 absolute cursor-pointer w-fit"
+          >
+            <RiCloseFill className="text-4xl" />
+          </span>
+          <input
+            className="w-full border-b outline-none"
+            placeholder="Search"
+            type="search"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+          />
+          <div className="mt-5 max-h-80 overflow-y-auto">
+            {loading && <p className="text-center">Searching...</p>}
 
-      {/*  SLIDE DOWN MENU */}
-      <div
-        className={`
-          lg:hidden overflow-hidden transition-all duration-300 bg-base-100
-          ${menuOpen ? "max-h-96" : "max-h-0"}
-        `}
-      >
-        <ul className="flex flex-col gap-2 px-4">
-          {links.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.path}
-                onClick={() => setMenuOpen(false)}
-                className="block py-1 font-semibold hover:text-accent"
+            {!loading && results.length === 0 && search && (
+              <p className="text-center">No recipes found</p>
+            )}
+
+            {results.map((item) => (
+              <div
+                key={item.name}
+                className="py-2 border-b cursor-pointer hover:text-accent"
               >
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+                {item.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 
