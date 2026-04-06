@@ -1,6 +1,6 @@
 "use client";
 
-import { links, recipes } from "@/constants";
+import { links } from "@/constants";
 import { searchRecipe } from "@/lib/recipes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -40,8 +40,7 @@ const Navbar = () => {
     setLoading(true);
 
     const res = await searchRecipe(query);
-    const data = res?.data || [];
-
+    const data = res?.data.slice(0, 4) || [];
     setResults(data);
     setLoading(false);
   }
@@ -53,8 +52,6 @@ const Navbar = () => {
 
     return () => clearTimeout(delay);
   }, [search]);
-
-  console.log(results);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "night" ? "light" : "night"));
@@ -156,8 +153,8 @@ const Navbar = () => {
           </span>
           <input
             className="w-full border-b outline-none"
+            type="text"
             placeholder="Search"
-            type="search"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
           />
@@ -169,12 +166,11 @@ const Navbar = () => {
             )}
 
             {results.map((item) => (
-              <div
-                key={item.name}
-                className="py-2 border-b cursor-pointer hover:text-accent"
-              >
-                {item.name}
-              </div>
+              <Link href={`/${item.id}`} key={item.name}>
+                <div className="py-2 border-b cursor-pointer hover:text-accent">
+                  {item.name}
+                </div>
+              </Link>
             ))}
           </div>
         </div>
