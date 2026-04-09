@@ -14,7 +14,7 @@ export default function Home() {
         <Navbar />
         <Hero />
         <CustomCategory sectionTitle="Sugar Rush" category="dessert" />
-        <CustomCategory sectionTitle="Purely Plant" category="vegan" />
+        <CustomCategory sectionTitle="Purely Plant" category="Vegetarian" />
         <CustomCategory sectionTitle="Chicken Delights" category="Chicken" />
       </div>
       <NewsLetter />

@@ -2,6 +2,7 @@
 
 import { links } from "@/constants";
 import { searchRecipe } from "@/lib/recipes";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -40,7 +41,7 @@ const Navbar = () => {
     setLoading(true);
 
     const res = await searchRecipe(query);
-    const data = res?.data.slice(0, 4) || [];
+    const data = res?.data || [];
     setResults(data);
     setLoading(false);
   }
@@ -143,7 +144,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`${searchOpen ? "absolute" : "hidden"} bg-base-200 p-10 z-50 w-full mx-auto top-0`}
+          className={`${searchOpen ? "absolute" : "hidden"} bg-base-200 px-10 pb-10 z-50 w-full mx-auto top-0`}
         >
           <span
             onClick={() => setsearchOpen(false)}
@@ -165,13 +166,31 @@ const Navbar = () => {
               <p className="text-center">No recipes found</p>
             )}
 
-            {results.map((item) => (
+            {results?.slice(0, 4).map((item) => (
               <Link href={`/${item.id}`} key={item.name}>
-                <div className="py-2 border-b cursor-pointer hover:text-accent">
-                  {item.name}
+                <div className="py-2 border-b border-gray-200 cursor-pointer hover:text-accent">
+                  <div className="flex items-center gap-x-4">
+                    <Image
+                      src={item.image}
+                      width={50}
+                      height={50}
+                      alt={item.image}
+                    />
+                    <p>{item.name}</p>
+                  </div>
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="flex items-center justify-center mt-8">
+            {results.length > 1 && (
+              <Link
+                href="/search"
+                className="btn btn-outline hover:btn-neutral"
+              >
+                See all {results.length} results
+              </Link>
+            )}
           </div>
         </div>
       </nav>
