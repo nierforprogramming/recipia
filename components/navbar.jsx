@@ -144,7 +144,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`${searchOpen ? "absolute" : "hidden"} bg-base-200 px-10 pb-10 z-50 w-full mx-auto top-0`}
+          className={`${searchOpen ? "absolute" : "hidden"} bg-base-200 px-10 py-10 pb-10 z-50 w-full mx-auto top-0`}
         >
           <span
             onClick={() => setsearchOpen(false)}
@@ -182,10 +182,10 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <div className="flex items-center justify-center mt-8">
+          <div className="flex items-center justify-center">
             {results.length > 1 && (
               <Link
-                href="/search"
+                href={`/search?q=${search}`}
                 className="btn btn-outline hover:btn-neutral"
               >
                 See all {results.length} results
